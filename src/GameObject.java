@@ -3,12 +3,13 @@ import java.awt.Rectangle;
 
 public class GameObject {
 	 Rectangle collisionBox;
-	 int x;
-	 int y;
+	 float x;
+	 float y;
 	 int width;
 	 int height;
-	 int speed = 0;
+	 float speed = 0;
 	 boolean isActive = true;
+	 int hp;
 	 GameObject(int x, int y, int width, int height) {
 		 this.x = x;
 		 this.y = y;
@@ -17,7 +18,7 @@ public class GameObject {
 		collisionBox = new Rectangle(x, y, width, height);
 	 }
 	 void update() {
-		 collisionBox.setBounds(x, y, width, height);                 
+		 collisionBox.setBounds((int)x-width/2, (int)y-height/2, width, height);                 
 	 }
 	 
 }

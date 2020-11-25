@@ -22,18 +22,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	Font subFont;
 	Timer frameDraw;
 	ObjectManager om;
+	Character c;
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 	Timer alienSpawn;
 	
 	GamePanel() {
-		  frameDraw = new Timer(1000/60,this);
-		    frameDraw.start();
+		frameDraw = new Timer(1000/60,this);
+		frameDraw.start();
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		subFont = new Font("Arial", Font.PLAIN, 30);
+		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 50, 50, 100);
+		om = new ObjectManager(c);
 		if (needImage) {
-		    loadImage ("space.png");
+		    //loadImage ("");
 		}
 	}
 
@@ -41,35 +44,38 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	}
 
 	void updateGameState() {
-		
+		om.update();
+		if (c.isActive == false) {
+			currentState = END;
+		}
 	}
 
 	void updateEndState() {
 	}
 
 	void drawMenuState(Graphics g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
-		g.setColor(Color.YELLOW);
-		g.drawString("LEAGUE INVADERS", 10, 100);
+		g.setColor(Color.WHITE);
+		g.drawString("Zombs", Zombs.WIDTH/2-50, 100);
 		g.setFont(subFont);
-		g.setColor(Color.YELLOW);
-		g.drawString("press ENTER to start", 100, 400);
+		g.setColor(Color.WHITE);
+		g.drawString("press ENTER to start", Zombs.WIDTH/2-130, 400);
 		g.setFont(subFont);
-		g.setColor(Color.YELLOW);
-		g.drawString("press SPACE for instructions", 50, 550);
+		g.setColor(Color.WHITE);
+		g.drawString("press SPACE for instructions", Zombs.WIDTH/2-170, 550);
 	}
 
 	void drawGameState(Graphics g) {
 		if (gotImage) {
 			g.drawImage(image, 0, 0,Zombs.WIDTH, Zombs.HEIGHT, null);
 		} else {
-			g.setColor(Color.BLACK);
+			g.setColor(Color.green);
 			g.fillRect(0, 0,Zombs.WIDTH, Zombs.HEIGHT);
 		}
-		
-		
+		c.update();
+		om.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -127,19 +133,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode()==KeyEvent.VK_W) {
 		    System.out.println("W");
-		    
+		    c.movingUp = true;
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_S) {
 		    System.out.println("S");
-		   
+		   c.movingDown = true;
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_A) {
 		    System.out.println("A");
-		  
+		  c.movingLeft = true;
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_D) {
 		    System.out.println("D");
-		    
+		    c.movingRight = true;
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_SPACE && currentState == GAME) {
 			
@@ -152,21 +158,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		if (arg0.getKeyCode()==KeyEvent.VK_UP) {
+		if (arg0.getKeyCode()==KeyEvent.VK_W) {
 		    System.out.println("UP");
-		    
+		    c.movingUp = false;
 		}
-		if (arg0.getKeyCode()==KeyEvent.VK_DOWN) {
+		if (arg0.getKeyCode()==KeyEvent.VK_S) {
 		    System.out.println("DOWN");
-		    
+		    c.movingDown = false;
 		}
-		if (arg0.getKeyCode()==KeyEvent.VK_LEFT) {
+		if (arg0.getKeyCode()==KeyEvent.VK_A) {
 		    System.out.println("LEFT");
-		    
+		    c.movingLeft = false;
 		}
-		if (arg0.getKeyCode()==KeyEvent.VK_RIGHT) {
+		if (arg0.getKeyCode()==KeyEvent.VK_D) {
 		    System.out.println("RIGHT");
-		    
+		    c.movingRight = false;
 		}
 		// TODO Auto-generated method stub
 		

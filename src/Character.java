@@ -5,33 +5,43 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class Character extends GameObject{
-	Character(int x, int y, int width, int height) {
+	Character(int x, int y, int width, int height, int hp) {
 		super(x, y, width, height);
-		// TODO Auto-generated constructor stub
+		this.hp = hp;
+		speed = 5;
 	}
 	public boolean movingUp, movingDown, movingRight, movingLeft;
-	public static BufferedImage image;
-	public static boolean needImage = true;
-	public static boolean gotImage = false;	
+	public BufferedImage image;
+	public boolean needImage = true;
+	public boolean gotImage = false;	
 	
 	void draw(Graphics g) {
 	    if (gotImage) {
+	    	g.drawImage(image, (int)x, (int)y, width, height, null);
 	        } else {
 	        	g.setColor(Color.BLUE);
+	        	g.fillRect((int)x-width/2, (int)y-height/2, width, height);
 	        }
 	} 
 	public void right() {
-		
-	
+		if (x < Zombs.WIDTH - width) {
+			x+=speed;
+		}
     }
 	public void left() {
-       
+		if (x > 0) {
+	        	x-=speed;
+			}
     }
 	public void up() {
-
+		if (y > 0) {
+			y-=speed;
+		}
     }
 	public void down() {
-		
+		if (y < Zombs.HEIGHT - height) {
+			y+=speed;
+		}
 	}
 		
 	public void update() {
