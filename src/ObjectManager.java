@@ -10,13 +10,14 @@ public class ObjectManager implements ActionListener{
 	ArrayList<Zombies> zm;
 	Random rnd;
 	int score = 0;
+	CrossHair ch;
 
-	ObjectManager(Character c) {
+	ObjectManager(Character c, CrossHair ch) {
 		this.c = c;
 		bl = new ArrayList<Bullet>();
 		zm = new ArrayList<Zombies>();
 		rnd = new Random();
-		
+		this.ch = ch;
 	}
 	int getScore() {
 		return score;
@@ -59,6 +60,7 @@ public class ObjectManager implements ActionListener{
 				z1.isActive = false;
 			}
 		}
+		c.update();
 		checkCollision();
 		purgeObjects();
 		}
@@ -72,6 +74,7 @@ public class ObjectManager implements ActionListener{
 			Bullet pro = bl.get(i);
 			pro.draw(g); 
 		}
+		ch.draw(g);
 	}
 	void purgeObjects() {
 		for (int i = zm.size()-1; i >= 0; i--) {

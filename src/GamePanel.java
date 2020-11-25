@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -12,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements KeyListener, ActionListener {
+public class GamePanel extends JPanel implements KeyListener, ActionListener, MouseListener, MouseMotionListener {
 	
 	final int MENU = 0;
 	final int GAME = 1;
@@ -27,6 +30,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 	Timer alienSpawn;
+	CrossHair ch;
 	
 	GamePanel() {
 		frameDraw = new Timer(1000/60,this);
@@ -34,11 +38,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		subFont = new Font("Arial", Font.PLAIN, 30);
 		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 50, 50, 100);
-		om = new ObjectManager(c);
+		ch = new CrossHair(400, 400, 100, 100);
+		om = new ObjectManager(c, ch);
 		if (needImage) {
 		    //loadImage ("");
 		}
-	}
+			}
 
 	void updateMenuState() {
 	}
@@ -71,10 +76,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		if (gotImage) {
 			g.drawImage(image, 0, 0,Zombs.WIDTH, Zombs.HEIGHT, null);
 		} else {
-			g.setColor(Color.green);
+			g.setColor(new Color (165,42,42));
 			g.fillRect(0, 0,Zombs.WIDTH, Zombs.HEIGHT);
 		}
-		c.update();
 		om.draw(g);
 	}
 
@@ -198,5 +202,47 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 		alienSpawn = new Timer(1000 , om);
 	    alienSpawn.start();
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
