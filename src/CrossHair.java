@@ -15,9 +15,10 @@ public class CrossHair extends GameObject{
 			loadImage ("crosshair.png");
 		}
 	}
-	void update() {
+	void update(int mouseX, int mouseY) {
+		x = mouseX - 130;
+		y = mouseY - 150;
 		super.update();
-		
 	}
 	void draw(Graphics g) {
 		 if (gotImage) {

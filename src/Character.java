@@ -70,6 +70,9 @@ public class Character extends GameObject{
 	        needImage = false;
 	    }
 	}
+	public Bullet getBullet(float destX, float destY) {
+		return new Bullet((int)x+width/2, (int)y, 10, 10, destX, destY );
+	}
  
 
 }

@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		subFont = new Font("Arial", Font.PLAIN, 30);
 		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 50, 50, 100);
-		ch = new CrossHair(400, 400, 100, 100);
+		ch = new CrossHair(400, 400, 250, 250);
 		om = new ObjectManager(c, ch);
 		if (needImage) {
 		    //loadImage ("");
@@ -207,7 +207,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (currentState == GAME) {
+			om.addBullet(c.getBullet(ch.x, ch.y));
+		}
 	}
 
 	@Override
@@ -243,6 +245,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		int mouseX = arg0.getX();
+		int mouseY = arg0.getY();
+		ch.update(mouseX, mouseY);
 	}
 }
