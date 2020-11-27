@@ -17,7 +17,7 @@ public class Character extends GameObject{
 	
 	void draw(Graphics g) {
 	    if (gotImage) {
-	    	g.drawImage(image, (int)x, (int)y, width, height, null);
+	    	g.drawImage(image, (int)x-width/2, (int)y-height/2, width, height, null);
 	        } else {
 	        	g.setColor(Color.BLUE);
 	        	g.fillRect((int)x-width/2, (int)y-height/2, width, height);
@@ -70,10 +70,6 @@ public class Character extends GameObject{
 	        needImage = false;
 	    }
 	}
-	public Bullet getBullet(float destX, float destY) {
-		return new Bullet((int)x+width/2, (int)y, 10, 10, destX, destY );
-	}
- 
 
 }
 

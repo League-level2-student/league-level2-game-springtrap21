@@ -9,23 +9,23 @@ public class CrossHair extends GameObject{
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
-	CrossHair(int x, int y, int width, int height) {
+	CrossHair(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		if (needImage) {
 			loadImage ("crosshair.png");
 		}
 	}
-	void update(int mouseX, int mouseY) {
-		x = mouseX - 130;
-		y = mouseY - 150;
+	void update(float mouseX, float mouseY) {
+		x = mouseX;
+		y = mouseY;
 		super.update();
 	}
 	void draw(Graphics g) {
 		 if (gotImage) {
-	        	g.drawImage(image, (int) x, (int) y, width, height, null);
+	        	g.drawImage(image, (int) x - width/2, (int) y - height/2, width, height, null);
 	        } else {
 	        	g.setColor(Color.BLUE);
-	        	g.fillRect((int)x, (int)y, width, height);
+	        	g.fillRect((int)x - width/2, (int)y - height/2, width, height);
 	        }
 	}
 	void loadImage(String imageFile) {

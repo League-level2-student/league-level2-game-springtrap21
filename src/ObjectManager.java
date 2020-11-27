@@ -22,8 +22,8 @@ public class ObjectManager implements ActionListener{
 	int getScore() {
 		return score;
 	}
-	void addBullet(Bullet b1) {
-		bl.add(b1);
+	void addBullet(float destX, float destY) {
+		bl.add(new Bullet(c.x, c.y, 10, 10, destX, destY));
 	}
 
 	void addZombie() {
@@ -49,14 +49,14 @@ public class ObjectManager implements ActionListener{
 		for (int i = 0; i < bl.size(); i++) {
 			Bullet b1 = bl.get(i);
 			b1.update();
-			if (b1.y < 0) {
+			if (b1.outOfBounds()) {
 				b1.isActive = false;
 			}
 		}
 		for (int i = 0; i < zm.size(); i++) {
 			Zombies z1 = zm.get(i);
 			z1.update();
-			if (z1.y > Zombs.HEIGHT) {
+			if (z1.outOfBounds()) {
 				z1.isActive = false;
 			}
 		}

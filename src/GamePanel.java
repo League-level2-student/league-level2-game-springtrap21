@@ -207,9 +207,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if (currentState == GAME) {
-			om.addBullet(c.getBullet(ch.x, ch.y));
-		}
+		
 	}
 
 	@Override
@@ -233,7 +231,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (currentState == GAME) {
+			om.addBullet(ch.x, ch.y);
+		}
 	}
 
 	@Override
@@ -245,8 +245,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		int mouseX = arg0.getX();
-		int mouseY = arg0.getY();
+		int mouseX = arg0.getX() - 7;
+		int mouseY = arg0.getY() - 30;
 		ch.update(mouseX, mouseY);
 	}
 }
