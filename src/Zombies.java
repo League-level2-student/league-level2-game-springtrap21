@@ -9,10 +9,11 @@ public class Zombies extends GameObject {
 	public static boolean needImage = true;
 	public static boolean gotImage = false;
 	GameObject target;
-	Zombies(int x, int y, int width, int height, GameObject target) {
+	Zombies(int x, int y, int width, int height, GameObject target, int hp) {
 		super(x, y, width, height);
 		speed = 1;
 		this.target = target;
+		this.hp = hp;
 		if (needImage) {
 		   // loadImage ("");
 		}
@@ -37,4 +38,14 @@ public class Zombies extends GameObject {
 	void loadImage(String imageFile) {
 	    
 	    }
+	void gotHit(int damage, float moveX, float moveY) {
+		hp = hp-damage;
+		if (hp <= 0) {
+			this.isActive = false;
+		}
+		else {
+			x += moveX * 10;
+			y += moveY * 10;
+		}
+		}
 	}
