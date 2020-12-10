@@ -11,11 +11,15 @@ public class Splat extends GameObject{
 	public static boolean gotImage = false;
 	float moveX;
 	float moveY;
+	long startTime;
+	int delay;
 	Splat(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		moveX = ObjectManager.rnd.nextFloat() * 2 - 1;
 		moveY = ObjectManager.rnd.nextFloat() * 2 - 1;
 		speed = ObjectManager.rnd.nextInt(10) + 11;
+		startTime = System.currentTimeMillis();
+		delay = ObjectManager.rnd.nextInt(2000) + 3000;
 	 }
 	void draw(Graphics g) {
 		if (gotImage) {
@@ -32,6 +36,9 @@ public class Splat extends GameObject{
 			speed--;
 		}
 		super.update();
+		if (System.currentTimeMillis() - startTime > delay) {
+			this.isActive = false;
+		}
 	}
 	void loadImage(String imageFile) {
 		if (needImage) {

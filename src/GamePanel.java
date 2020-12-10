@@ -31,19 +31,25 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	public static boolean gotImage = false;
 	Timer alienSpawn;
 	CrossHair ch;
-	
+	boolean firing;
+	long fireDelay;
+	long lastFire;
+
 	GamePanel() {
 		frameDraw = new Timer(1000/60,this);
 		frameDraw.start();
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		subFont = new Font("Arial", Font.PLAIN, 30);
 		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 50, 50, 100);
-		ch = new CrossHair(400, 400, 250, 250);
+		ch = new CrossHair(0, 0, 75, 75);
 		om = new ObjectManager(c, ch);
 		if (needImage) {
-		    //loadImage ("");
+			//loadImage ("");
 		}
-			}
+		firing = false;
+		fireDelay = 300;
+		lastFire = System.currentTimeMillis();
+	}
 
 	void updateMenuState() {
 	}
@@ -52,6 +58,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		om.update();
 		if (c.isActive == false) {
 			currentState = END;
+		}
+		if (firing) {
+			if (System.currentTimeMillis() - lastFire > fireDelay) {
+				lastFire = System.currentTimeMillis();
+				if (currentState == GAME) {
+					om.addBullet(ch.x, ch.y);
+				}
+			}
 		}
 	}
 
@@ -225,21 +239,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		firing = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if (currentState == GAME) {
-			om.addBullet(ch.x, ch.y);
-		}
+		firing = false;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		int mouseX = arg0.getX() - 7;
+		int mouseY = arg0.getY() - 30;
+		ch.update(mouseX, mouseY);
 	}
 
 	@Override

@@ -77,16 +77,15 @@ public class ObjectManager implements ActionListener{
 			Splat pro = sp.get(i);
 			pro.draw(g); 
 		}
-		c.draw(g);
-		for (int i = 0; i <zm.size(); i++) {
-			Zombies z1 = zm.get(i);
-			z1.draw(g);
-		}
 		for (int i = 0; i < bl.size(); i++) {
 			Bullet pro = bl.get(i);
 			pro.draw(g); 
 		}
-		
+		for (int i = 0; i <zm.size(); i++) {
+			Zombies z1 = zm.get(i);
+			z1.draw(g);
+		}
+		c.draw(g);
 		ch.draw(g);
 	}
 	void purgeObjects() {
