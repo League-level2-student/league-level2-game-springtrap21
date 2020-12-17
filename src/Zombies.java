@@ -13,11 +13,15 @@ public class Zombies extends GameObject {
 	public static boolean gotImage = false;
 	GameObject target;
 	int facing;
-	Zombies(int x, int y, int width, int height, GameObject target, int hp) {
+	float moveX;
+	float moveY;
+	int damage;
+	Zombies(int x, int y, int width, int height, GameObject target, int hp, int damage) {
 		super(x, y, width, height);
 		speed = 1;
 		this.target = target;
 		this.hp = hp;
+		this.damage = damage;
 		if (needImage) {
 			loadImage("zombie1.png");
 		}
@@ -27,8 +31,10 @@ public class Zombies extends GameObject {
 		float diffx = target.x - this.x;
 		float diffy = target.y - this.y;
 		float dist = (float) Math.sqrt(diffx * diffx + diffy * diffy);
-		x += (diffx/dist*speed);
-		y += (diffy/dist*speed);
+		moveX = diffx/dist;
+		moveY = diffy/dist;
+		x += (moveX*speed);
+		y += (moveY*speed);
 		facing = (int) (Math.atan2(diffy, diffx)*180/Math.PI) + 90;
 		super.update();
 	}

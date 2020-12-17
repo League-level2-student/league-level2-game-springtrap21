@@ -43,7 +43,7 @@ public class ObjectManager implements ActionListener{
 			x = Zombs.WIDTH;
 			y = rnd.nextInt(Zombs.HEIGHT);		
 		}
-		zm.add(new Zombies(x, y, 50, 50, c, 100));
+		zm.add(new Zombies(x, y, 50, 50, c, 100, 34));
 	}
 
 	void update() {
@@ -128,8 +128,9 @@ public class ObjectManager implements ActionListener{
 				}
 			}
 			if (z.collisionBox.intersects(c.collisionBox)) {
-				c.isActive = false;
-				z.isActive = false;
+				c.gotHit(z.damage, z.moveX, z.moveY);
+				z.gotHit(0, -z.moveX, -z.moveY);
+				
 				
 			}
 		}

@@ -70,6 +70,16 @@ public class Character extends GameObject{
 	        needImage = false;
 	    }
 	}
+	void gotHit(int damage, float moveX, float moveY) {
+		hp = hp-damage;
+		if (hp <= 0) {
+			this.isActive = false;
+		}
+		else {
+			x += moveX * 30;
+			y += moveY * 30;
+		}
 
+	}
 }
 
