@@ -101,12 +101,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
-		g.drawString("GAME OVER", 100, 100);
+		g.drawString("GAME OVER", 250, 100);
 		g.setFont(subFont);
 		g.setColor(Color.BLACK);
 		g.setFont(subFont);
+		g.drawString("You killed " + om.score + " Zombies!", 250, 350);
 		g.setColor(Color.BLACK);
-		g.drawString("press enter to reastart", 75, 550);
+		g.drawString("press enter to reastart", 240, 550);
 		
 	}
 
@@ -140,7 +141,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		    if (currentState == END) {
 		        currentState = MENU;
 		    }
-		    else if (currentState == MENU) {
+		    else if (currentState == MENU && arg0.getKeyCode()==KeyEvent.VK_ENTER) {
 				currentState = GAME;
 				startGame();
 			}
@@ -169,7 +170,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_SPACE && currentState == MENU) {
-			JOptionPane.showMessageDialog(null, "You move your rocket ship around with the arrow keys. Use space to shoot at the Aliens, and try to survive!");
+			JOptionPane.showMessageDialog(null, "You move your character around with the keys: W A S D. Use Left Click to shoot at the Zombies, and try to survive!");
 		}
 	}
 	

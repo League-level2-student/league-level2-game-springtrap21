@@ -93,6 +93,7 @@ public class ObjectManager implements ActionListener{
 			Zombies z1 = zm.get(i);
 			if (z1.isActive == false) {
 				zm.remove(z1);
+				score++;
 			}
 		}
 		for (int i = bl.size()-1; i >= 0; i--) {
@@ -124,7 +125,6 @@ public class ObjectManager implements ActionListener{
 					z.gotHit(b.damage, b.moveX, b.moveY);
 					createBlood(b.x, b.y);
 					b.isActive = false;
-					score++;
 				}
 			}
 			if (z.collisionBox.intersects(c.collisionBox)) {
