@@ -20,10 +20,13 @@ public class Splat extends GameObject{
 		speed = ObjectManager.rnd.nextInt(10) + 11;
 		startTime = System.currentTimeMillis();
 		delay = ObjectManager.rnd.nextInt(2000) + 3000;
+		if (needImage) {
+			loadImage("blood splat.png");
+		}
 	 }
 	void draw(Graphics g) {
 		if (gotImage) {
-        	g.drawImage(image, (int) x - width/2, (int) y - height/2, width, height, null);
+        	g.drawImage(image, (int) x - width/2, (int) y - height/2, null);
         } else {
         	g.setColor(Color.red);
         	g.fillRect((int)x - width/2, (int)y - height/2, width, height);

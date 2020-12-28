@@ -16,7 +16,9 @@ public class Zombies extends GameObject {
 	float moveX;
 	float moveY;
 	int damage;
-	Zombies(int x, int y, int width, int height, GameObject target, int hp, int damage) {
+	BufferedImage graphic;
+	long lastSet = 0;
+	Zombies(float x, float y, int width, int height, GameObject target, int hp, int damage) {
 		super(x, y, width, height);
 		speed = 1;
 		this.target = target;
@@ -40,9 +42,14 @@ public class Zombies extends GameObject {
 	}
 	void draw(Graphics g) {
 		if (gotImage) {
-			int imgX = (int)x - width/2;
-			int imgY = (int)y - height/2;
-			g.drawImage(rotateImageByDegrees(image, facing), imgX, imgY, null);
+			
+			if (System.currentTimeMillis() - lastSet > 200) {
+				graphic = rotateImageByDegrees(image, facing);
+				lastSet = System.currentTimeMillis();
+			}
+			int imgX = (int)x - graphic.getWidth()/2;
+			int imgY = (int)y - graphic.getHeight()/2;
+			g.drawImage(graphic, imgX, imgY, null);
 		} else {
 			g.setColor(Color.RED);
 			g.fillRect((int)x-width/2, (int)y-height/2, width, height);
@@ -64,6 +71,7 @@ public class Zombies extends GameObject {
 		hp = hp-damage;
 		if (hp <= 0) {
 			this.isActive = false;
+			Zombs.playSound("zombie die.wav");
 		}
 		else {
 			x += moveX * 10;

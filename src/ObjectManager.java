@@ -11,6 +11,10 @@ public class ObjectManager implements ActionListener{
 	ArrayList<Splat> sp;
 	public static Random rnd = new Random();
 	int score = 0;
+	int zomSpawned = 0;
+	boolean zomSpawn = true;
+	int wave = 1;
+	int zomPerWave = 5;
 	CrossHair ch;
 
 	ObjectManager(Character c, CrossHair ch) {
@@ -25,6 +29,7 @@ public class ObjectManager implements ActionListener{
 	}
 	void addBullet(float destX, float destY) {
 		bl.add(new Bullet(c.x, c.y, 10, 10, destX, destY, 34));
+		Zombs.playSound("gun shot.wav", -12);
 	}
 
 	void addZombie() {
@@ -44,6 +49,8 @@ public class ObjectManager implements ActionListener{
 			y = rnd.nextInt(Zombs.HEIGHT);		
 		}
 		zm.add(new Zombies(x, y, 50, 50, c, 100, 34));
+		zomSpawned ++;
+		//Zombs.playSound("zombie gargle.wav");
 	}
 
 	void update() {
@@ -63,7 +70,7 @@ public class ObjectManager implements ActionListener{
 		}
 		for (int i = 0; i < sp.size(); i++) {
 			Splat s1 = sp.get(i);
-			s1.update();
+			s1.update(); 
 			if (s1.outOfBounds()) {
 				s1.isActive = false;
 			}
@@ -114,6 +121,7 @@ public class ObjectManager implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		addZombie();
+		zomSpawned ++;
 		System.out.println("Zombie");
 	}
 	void checkCollision() {
@@ -125,12 +133,13 @@ public class ObjectManager implements ActionListener{
 					z.gotHit(b.damage, b.moveX, b.moveY);
 					createBlood(b.x, b.y);
 					b.isActive = false;
+					Zombs.playSound("bullet hit.wav", -6);
 				}
 			}
 			if (z.collisionBox.intersects(c.collisionBox)) {
 				c.gotHit(z.damage, z.moveX, z.moveY);
 				z.gotHit(0, -z.moveX, -z.moveY);
-				
+				Zombs.playSound("oof.wav");
 				
 			}
 		}

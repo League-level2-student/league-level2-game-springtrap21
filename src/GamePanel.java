@@ -17,6 +17,10 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements KeyListener, ActionListener, MouseListener, MouseMotionListener {
 	
+	public static BufferedImage image;
+	public static BufferedImage heartImage;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
@@ -26,10 +30,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	Timer frameDraw;
 	ObjectManager om;
 	Character c;
-	public static BufferedImage image;
-	public static boolean needImage = true;
-	public static boolean gotImage = false;
-	Timer alienSpawn;
+	
+	Timer zombieSpawn;
 	CrossHair ch;
 	boolean firing;
 	long fireDelay;
@@ -38,14 +40,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	GamePanel() {
 		frameDraw = new Timer(1000/60,this);
 		frameDraw.start();
-		titleFont = new Font("Arial", Font.PLAIN, 48);
-		subFont = new Font("Arial", Font.PLAIN, 30);
-		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 50, 50, 100);
+		loadImages();
+		reset();
+	}
+	
+	void reset() {
+		
+		titleFont = new Font("Calibri", Font.PLAIN, 48);
+		subFont = new Font("Comic Sans", Font.PLAIN, 30);
 		ch = new CrossHair(0, 0, 75, 75);
+		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 40, 40, 100, ch);
 		om = new ObjectManager(c, ch);
-		if (needImage) {
-			//loadImage ("");
-		}
+		
 		firing = false;
 		fireDelay = 300;
 		lastFire = System.currentTimeMillis();
@@ -77,13 +83,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.WHITE);
-		g.drawString("Zombs", Zombs.WIDTH/2-50, 100);
+		int textWidth = g.getFontMetrics().stringWidth("Santa Zombs");
+		g.drawString("Santa Zombs", Zombs.WIDTH/2-(textWidth/2), 100);
 		g.setFont(subFont);
 		g.setColor(Color.WHITE);
-		g.drawString("press ENTER to start", Zombs.WIDTH/2-130, 400);
+		textWidth = g.getFontMetrics().stringWidth("Press ENTER to start");
+		g.drawString("Press ENTER to start", Zombs.WIDTH/2-(textWidth/2), 400);
 		g.setFont(subFont);
 		g.setColor(Color.WHITE);
-		g.drawString("press SPACE for instructions", Zombs.WIDTH/2-170, 550);
+		textWidth = g.getFontMetrics().stringWidth("press SPACE for instructions");
+		g.drawString("Press SPACE for instructions", Zombs.WIDTH/2-(textWidth/2), 550);
 	}
 
 	void drawGameState(Graphics g) {
@@ -94,6 +103,24 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			g.fillRect(0, 0,Zombs.WIDTH, Zombs.HEIGHT);
 		}
 		om.draw(g);
+		
+		drawHud(g);
+	}
+	
+	void drawHud(Graphics g) {
+		if (c.hp > 66) {
+			g.drawImage(heartImage, Zombs.WIDTH - 100, 25, null);
+		}
+		if (c.hp > 33) {
+			g.drawImage(heartImage, Zombs.WIDTH - 160, 25, null);
+		}
+		if (c.hp > 0) {
+			g.drawImage(heartImage, Zombs.WIDTH - 220, 25, null);
+		}
+		
+		g.setFont(titleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("Purged: " + om.score, 30, 60);
 	}
 
 	void drawEndState(Graphics g) {
@@ -101,13 +128,16 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
-		g.drawString("GAME OVER", 250, 100);
+		int textWidth = g.getFontMetrics().stringWidth("GAME OVER");
+		g.drawString("GAME OVER", Zombs.WIDTH/2-(textWidth/2), 100);
 		g.setFont(subFont);
 		g.setColor(Color.BLACK);
 		g.setFont(subFont);
-		g.drawString("You killed " + om.score + " Zombies!", 250, 350);
+		textWidth = g.getFontMetrics().stringWidth("You purged " + om.score + " Zombies!");
+		g.drawString("You purged " + om.score + " Zombies!", Zombs.WIDTH/2-(textWidth/2), 350);
 		g.setColor(Color.BLACK);
-		g.drawString("press enter to reastart", 240, 550);
+		textWidth = g.getFontMetrics().stringWidth("Press ENTER to restart");
+		g.drawString("Press ENTER to restart", Zombs.WIDTH/2-(textWidth/2), 550);
 		
 	}
 
@@ -140,8 +170,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		if (arg0.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
+		        reset();
 		    }
-		    else if (currentState == MENU && arg0.getKeyCode()==KeyEvent.VK_ENTER) {
+		    else if (currentState == MENU) {
 				currentState = GAME;
 				startGame();
 			}
@@ -202,21 +233,27 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		// TODO Auto-generated method stub
 		
 	}
-	void loadImage(String imageFile) {
-	    if (needImage) {
-	        try {
-	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
-		    gotImage = true;
-	        } catch (Exception e) {
-	            
-	        }
-	        needImage = false;
-	    }
+	
+	void loadImages() {
+		heartImage = loadImage("healthIcon.png");
+		image = loadImage("snowyBackground.png");
+		gotImage = true;
 	}
-	void startGame() {
-		alienSpawn = new Timer(1000 , om);
-	    alienSpawn.start();
+	
+	BufferedImage loadImage(String imageFile) {
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		} catch (Exception e) {
 
+		}
+		return img;
+	}
+	
+	void startGame() {
+		zombieSpawn = new Timer(1000 , om);
+	    zombieSpawn.start();
+	    Zombs.playSound("ho ho ho.wav");
 	}
 
 	@Override

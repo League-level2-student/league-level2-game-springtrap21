@@ -11,6 +11,8 @@ public class Bullet extends GameObject{
 	float moveX;
 	float moveY;
 	int damage;
+	BufferedImage graphic;
+	int facing;
 	Bullet(float x, float y, int width, int height, float destX, float destY, int damage) {
 		super(x, y, width, height);
 		speed = 10;
@@ -20,11 +22,16 @@ public class Bullet extends GameObject{
 		float dist = (float) Math.sqrt(diffx * diffx + diffy * diffy);
 		moveX = (diffx/dist);
 		moveY = (diffy/dist);
+		facing = (int) (Math.atan2(diffy, diffx)*180/Math.PI) + 90;
+		if (needImage) {
+			loadImage("Bullet1.png");
+		}
+		graphic = rotateImageByDegrees(image, facing);
 		// TODO Auto-generated constructor stub
 	}
 	void draw(Graphics g) {
 		if (gotImage) {
-        	g.drawImage(image, (int) x - width/2, (int) y - height/2, width, height, null);
+        	g.drawImage(graphic, (int) x - graphic.getWidth()/2, (int) y - graphic.getHeight()/2, null);
         } else {
         	g.setColor(Color.yellow);
         	g.fillRect((int)x - width/2, (int)y - height/2, width, height);
