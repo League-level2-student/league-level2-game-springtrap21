@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.management.timer.Timer;
+
 public class ObjectManager implements ActionListener{
 	Character c;
 	ArrayList<Bullet> bl;
@@ -13,8 +15,10 @@ public class ObjectManager implements ActionListener{
 	int score = 0;
 	int zomSpawned = 0;
 	boolean zomSpawn = true;
+	boolean allZomDead = false;
 	int wave = 1;
 	int zomPerWave = 5;
+	long wavePause;
 	CrossHair ch;
 
 	ObjectManager(Character c, CrossHair ch) {
@@ -120,9 +124,19 @@ public class ObjectManager implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		addZombie();
-		zomSpawned ++;
+		if (zomSpawn == true) {
+			addZombie();
+		}
+		else if (zomSpawn == false) {
+			
+		}
 		System.out.println("Zombie");
+		if (zomSpawned == zomPerWave) {
+			zomSpawn = false;
+		}
+		if (allZomDead == true) {
+			wavePause.start();
+		}
 	}
 	void checkCollision() {
 		for (int i = 0; i < zm.size(); i++) {

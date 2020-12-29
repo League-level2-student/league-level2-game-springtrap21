@@ -30,7 +30,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	Timer frameDraw;
 	ObjectManager om;
 	Character c;
-	
 	Timer zombieSpawn;
 	CrossHair ch;
 	boolean firing;
