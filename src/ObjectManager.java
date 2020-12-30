@@ -79,6 +79,12 @@ public class ObjectManager implements ActionListener{
 				s1.isActive = false;
 			}
 		}
+		if (System.currentTimeMillis() - wavePause > 10000) {
+			allZomDead = false;
+			zomSpawn = true;
+			zomPerWave = zomPerWave +1;
+			zomSpawned = 0;
+		}
 		c.update();
 		checkCollision();
 		purgeObjects();
@@ -130,12 +136,11 @@ public class ObjectManager implements ActionListener{
 		else if (zomSpawn == false) {
 			
 		}
-		System.out.println("Zombie");
 		if (zomSpawned == zomPerWave) {
 			zomSpawn = false;
 		}
 		if (allZomDead == true) {
-			wavePause.start();
+			wavePause = System.currentTimeMillis();
 		}
 	}
 	void checkCollision() {
