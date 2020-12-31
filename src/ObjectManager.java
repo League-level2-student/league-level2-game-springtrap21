@@ -15,6 +15,7 @@ public class ObjectManager{
 	int score = 0;
 	int hits = 0;
 	int misses = 0;
+	int points = 0;
 	int zomSpawned = 0;
 	int zomKilled = 0;
 	boolean zomSpawn = true;
@@ -149,6 +150,7 @@ public class ObjectManager{
 		wavePause = System.currentTimeMillis();
 		zomKilled = 0;
 		zomSpawned = 0;
+		points += hits * 10 - misses * 5;
 		hits = 0;
 		misses = 0;
 		wave++;

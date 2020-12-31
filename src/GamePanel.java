@@ -128,6 +128,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		if (pause) {
 			g.drawString("PAUSED", Zombs.WIDTH/2 - textWidth/2, Zombs.HEIGHT/2);
 		}
+		textWidth = g.getFontMetrics().stringWidth("Points: " + om.points);
+		g.drawString("Points: " + om.points, Zombs.WIDTH/2 - textWidth/2, 700);
 	}
 
 	void drawEndState(Graphics g) {
@@ -140,8 +142,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.setFont(subFont);
 		g.setColor(Color.BLACK);
 		g.setFont(subFont);
-		textWidth = g.getFontMetrics().stringWidth("You survived until wave" + om.wave + " !");
-		g.drawString("You survived " + om.wave + " Waves!", Zombs.WIDTH/2-(textWidth/2), 400);
+		textWidth = g.getFontMetrics().stringWidth("You survived until wave " + om.wave + " !");
+		g.drawString("You survived until wave" + om.wave + " !", Zombs.WIDTH/2-(textWidth/2), 400);
 		textWidth = g.getFontMetrics().stringWidth("You purged " + om.score + " Zombies!");
 		g.drawString("You purged " + om.score + " Zombies!", Zombs.WIDTH/2-(textWidth/2), 330);
 		g.setColor(Color.BLACK);
