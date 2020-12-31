@@ -30,11 +30,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	Timer frameDraw;
 	ObjectManager om;
 	Character c;
-	Timer zombieSpawn;
 	CrossHair ch;
 	boolean firing;
 	long fireDelay;
 	long lastFire;
+	boolean pause = false;
 
 	GamePanel() {
 		frameDraw = new Timer(1000/60,this);
@@ -60,15 +60,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	}
 
 	void updateGameState() {
-		om.update();
-		if (c.isActive == false) {
-			currentState = END;
-		}
-		if (firing) {
-			if (System.currentTimeMillis() - lastFire > fireDelay) {
-				lastFire = System.currentTimeMillis();
-				if (currentState == GAME) {
-					om.addBullet(ch.x, ch.y);
+		if (!pause) {
+			om.update();
+			if (c.isActive == false) {
+				currentState = END;
+			}
+			if (firing) {
+				if (System.currentTimeMillis() - lastFire > fireDelay) {
+					lastFire = System.currentTimeMillis();
+					if (currentState == GAME) {
+						om.addBullet(ch.x, ch.y);
+					}
 				}
 			}
 		}
@@ -120,6 +122,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
 		g.drawString("Purged: " + om.score, 30, 60);
+		int textWidth = g.getFontMetrics().stringWidth("Wave: " + om.wave);
+		g.drawString("Wave: " + om.wave, Zombs.WIDTH/2 - textWidth/2, 60);
+		textWidth = g.getFontMetrics().stringWidth("PAUSED");
+		if (pause) {
+			g.drawString("PAUSED", Zombs.WIDTH/2 - textWidth/2, Zombs.HEIGHT/2);
+		}
 	}
 
 	void drawEndState(Graphics g) {
@@ -127,13 +135,15 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.BLACK);
-		int textWidth = g.getFontMetrics().stringWidth("GAME OVER");
-		g.drawString("GAME OVER", Zombs.WIDTH/2-(textWidth/2), 100);
+		int textWidth = g.getFontMetrics().stringWidth("NICE TRY GAME OVER");
+		g.drawString("NICE TRY GAME OVER", Zombs.WIDTH/2-(textWidth/2), 100);
 		g.setFont(subFont);
 		g.setColor(Color.BLACK);
 		g.setFont(subFont);
+		textWidth = g.getFontMetrics().stringWidth("You survived until wave" + om.wave + " !");
+		g.drawString("You survived " + om.wave + " Waves!", Zombs.WIDTH/2-(textWidth/2), 400);
 		textWidth = g.getFontMetrics().stringWidth("You purged " + om.score + " Zombies!");
-		g.drawString("You purged " + om.score + " Zombies!", Zombs.WIDTH/2-(textWidth/2), 350);
+		g.drawString("You purged " + om.score + " Zombies!", Zombs.WIDTH/2-(textWidth/2), 330);
 		g.setColor(Color.BLACK);
 		textWidth = g.getFontMetrics().stringWidth("Press ENTER to restart");
 		g.drawString("Press ENTER to restart", Zombs.WIDTH/2-(textWidth/2), 550);
@@ -173,8 +183,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		    }
 		    else if (currentState == MENU) {
 				currentState = GAME;
-				startGame();
+				Zombs.playSound("ho ho ho.wav");
 			}
+		    else if (currentState == GAME) {
+		    	pause = !pause;
+		    }
 		    else {
 		        currentState++;
 		    }
@@ -200,7 +213,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_SPACE && currentState == MENU) {
-			JOptionPane.showMessageDialog(null, "You move your character around with the keys: W A S D. Use Left Click to shoot at the Zombies, and try to survive!");
+			JOptionPane.showMessageDialog(null, "You move your character around with the keys: W A S D. Use Left Click to shoot at the Zombies. Need some time? press enter when you are in the game to pause. And one last thing, try to survive!");
 		}
 	}
 	
@@ -247,12 +260,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 
 		}
 		return img;
-	}
-	
-	void startGame() {
-		zombieSpawn = new Timer(1000 , om);
-	    zombieSpawn.start();
-	    Zombs.playSound("ho ho ho.wav");
 	}
 
 	@Override

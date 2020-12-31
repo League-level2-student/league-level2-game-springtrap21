@@ -6,19 +6,23 @@ import java.util.Random;
 
 import javax.management.timer.Timer;
 
-public class ObjectManager implements ActionListener{
+public class ObjectManager{
 	Character c;
 	ArrayList<Bullet> bl;
 	ArrayList<Zombies> zm;
 	ArrayList<Splat> sp;
 	public static Random rnd = new Random();
 	int score = 0;
+	int hits = 0;
+	int misses = 0;
 	int zomSpawned = 0;
+	int zomKilled = 0;
 	boolean zomSpawn = true;
 	boolean allZomDead = false;
 	int wave = 1;
 	int zomPerWave = 5;
 	long wavePause;
+	long zombLastSpawn;
 	CrossHair ch;
 
 	ObjectManager(Character c, CrossHair ch) {
@@ -53,7 +57,6 @@ public class ObjectManager implements ActionListener{
 			y = rnd.nextInt(Zombs.HEIGHT);		
 		}
 		zm.add(new Zombies(x, y, 50, 50, c, 100, 34));
-		zomSpawned ++;
 		//Zombs.playSound("zombie gargle.wav");
 	}
 
@@ -63,6 +66,7 @@ public class ObjectManager implements ActionListener{
 			b1.update();
 			if (b1.outOfBounds()) {
 				b1.isActive = false;
+				misses++;
 			}
 		}
 		for (int i = 0; i < zm.size(); i++) {
@@ -79,16 +83,12 @@ public class ObjectManager implements ActionListener{
 				s1.isActive = false;
 			}
 		}
-		if (System.currentTimeMillis() - wavePause > 10000) {
-			allZomDead = false;
-			zomSpawn = true;
-			zomPerWave = zomPerWave +1;
-			zomSpawned = 0;
-		}
 		c.update();
 		checkCollision();
 		purgeObjects();
-		}
+		checkSpawn();
+	}
+	
 	void draw(Graphics g) {
 		for (int i = 0; i < sp.size(); i++) {
 			Splat pro = sp.get(i);
@@ -111,6 +111,7 @@ public class ObjectManager implements ActionListener{
 			if (z1.isActive == false) {
 				zm.remove(z1);
 				score++;
+				zomKilled++;
 			}
 		}
 		for (int i = bl.size()-1; i >= 0; i--) {
@@ -126,23 +127,34 @@ public class ObjectManager implements ActionListener{
 			}
 		}
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		if (zomSpawn == true) {
+	
+	void checkSpawn() {
+		if (zomSpawn && System.currentTimeMillis() - zombLastSpawn > 1000) {
 			addZombie();
+			zomSpawned++;
+			zombLastSpawn = System.currentTimeMillis();
 		}
-		else if (zomSpawn == false) {
-			
+		else if (zomSpawned == 0 && System.currentTimeMillis() - wavePause > 5000){
+			zomSpawn = true;
 		}
 		if (zomSpawned == zomPerWave) {
 			zomSpawn = false;
 		}
-		if (allZomDead == true) {
-			wavePause = System.currentTimeMillis();
+		if (zomKilled == zomPerWave) {
+			newWaveStart();
 		}
 	}
+	
+	void newWaveStart() {
+		wavePause = System.currentTimeMillis();
+		zomKilled = 0;
+		zomSpawned = 0;
+		hits = 0;
+		misses = 0;
+		wave++;
+		zomPerWave += 2;
+	}
+	
 	void checkCollision() {
 		for (int i = 0; i < zm.size(); i++) {
 			Zombies z = zm.get(i);
@@ -153,6 +165,7 @@ public class ObjectManager implements ActionListener{
 					createBlood(b.x, b.y);
 					b.isActive = false;
 					Zombs.playSound("bullet hit.wav", -6);
+					hits++;
 				}
 			}
 			if (z.collisionBox.intersects(c.collisionBox)) {
