@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	final int MENU = 0;
 	final int GAME = 1;
 	final int END = 2;
+	final int SHOP = 3;
 	int currentState = MENU;
 	Font titleFont;
 	Font subFont;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	ObjectManager om;
 	Character c;
 	CrossHair ch;
+	Shop shop;
 	boolean firing;
 	long fireDelay;
 	long lastFire;
@@ -50,7 +52,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		ch = new CrossHair(0, 0, 75, 75);
 		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 40, 40, 100, ch);
 		om = new ObjectManager(c, ch);
-		
+		shop = new Shop();
 		firing = false;
 		fireDelay = 300;
 		lastFire = System.currentTimeMillis();
@@ -73,10 +75,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 					}
 				}
 			}
+			if (om.shopTime) {
+				currentState = SHOP;
+				om.shopTime = false;
+			}
 		}
 	}
 
 	void updateEndState() {
+	}
+	
+	void updateShopState() {
+		
 	}
 
 	void drawMenuState(Graphics g) {
@@ -151,6 +161,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.drawString("Press ENTER to restart", Zombs.WIDTH/2-(textWidth/2), 550);
 		
 	}
+	
+	void drawShopState(Graphics g) {
+		shop.draw(g);
+	}
 
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU) {
@@ -159,6 +173,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			drawGameState(g);
 		} else if (currentState == END) {
 			drawEndState(g);
+		} else if (currentState == SHOP) {
+			drawGameState(g);
+			drawShopState(g);
 		}
 	}
 
@@ -171,7 +188,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		    updateGameState();
 		}else if(currentState == END){
 		    updateEndState();
-		}	
+		}else if(currentState == SHOP) {
+			updateShopState();
+		}
 		repaint();
 	}
 
@@ -189,6 +208,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			}
 		    else if (currentState == GAME) {
 		    	pause = !pause;
+		    }
+		    else if (currentState == SHOP) {
+		    	currentState = GAME;
 		    }
 		    else {
 		        currentState++;

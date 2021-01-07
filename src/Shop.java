@@ -1,14 +1,11 @@
+import java.awt.Graphics;
 
-public class Shop extends GameObject{
+public class Shop {
 
-	Shop(float x, float y, int width, int height) {
-		super(x, y, width, height);
-		// TODO Auto-generated constructor stub
-	}
 	void update() {
-		super.update();
-	}
-	void draw() {
 		
+	}
+	void draw(Graphics g) {
+		g.fillRect(400, 400, 300, 200);
 	}
 }

@@ -1,4 +1,7 @@
-	import javax.sound.sampled.AudioInputStream;
+	import java.awt.Point;
+import java.awt.image.BufferedImage;
+
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
@@ -22,6 +25,7 @@ import javax.swing.JFrame;
 			frame.addMouseMotionListener(gp1);
 			frame.addMouseListener(gp1);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setCursor(frame.getToolkit().createCustomCursor(new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB), new Point(), null));
 			frame.setVisible(true);
 		}
 
