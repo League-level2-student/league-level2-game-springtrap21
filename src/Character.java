@@ -16,7 +16,7 @@ public class Character extends GameObject{
 	Character(float x, float y, int width, int height, int hp, CrossHair ch) {
 		super(x, y, width, height);
 		if (needImage) {
-			loadImage ("sauntaHat.png");
+			loadImage ("character.png");
 		}
 		this.hp = hp;
 		this.ch = ch;

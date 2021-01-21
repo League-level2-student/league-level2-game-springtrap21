@@ -94,7 +94,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.WHITE);
-		int textWidth = g.getFontMetrics().stringWidth("Santa Zombs");
+		int textWidth = g.getFontMetrics().stringWidth("Zombs: Survive");
 		g.drawString("Santa Zombs", Zombs.WIDTH/2-(textWidth/2), 100);
 		g.setFont(subFont);
 		g.setColor(Color.WHITE);
@@ -204,7 +204,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		    }
 		    else if (currentState == MENU) {
 				currentState = GAME;
-				Zombs.playSound("ho ho ho.wav");
+				//Zombs.playSound("ho ho ho.wav");
 			}
 		    else if (currentState == GAME) {
 		    	pause = !pause;
@@ -272,7 +272,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	
 	void loadImages() {
 		heartImage = loadImage("healthIcon.png");
-		image = loadImage("snowyBackground.png");
+		image = loadImage("grass.png");
 		gotImage = true;
 	}
 	

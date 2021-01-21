@@ -156,7 +156,7 @@ public class ObjectManager{
 		misses = 0;
 		wave++;
 		zomPerWave += 2;
-		if (wave == 5 || wave == 10 || wave == 15 || wave == 20 || wave == 25 || wave == 30 || wave == 40|| wave == 50) {
+		if (wave == 2 || wave == 5 || wave == 10 || wave == 15 || wave == 20 || wave == 25 || wave == 30 || wave == 40|| wave == 50) {
 			shopTime = true;
 		}
 	}
