@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		firing = false;
 		fireDelay = 300;
 		lastFire = System.currentTimeMillis();
+		
 	}
 
 	void updateMenuState() {
@@ -78,6 +79,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			if (om.shopTime) {
 				currentState = SHOP;
 				om.shopTime = false;
+				this.add(shop);				
+				this.revalidate();
 			}
 		}
 	}
@@ -210,6 +213,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		    	pause = !pause;
 		    }
 		    else if (currentState == SHOP) {
+		    	this.remove(shop);
 		    	currentState = GAME;
 		    }
 		    else {
