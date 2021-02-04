@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 		Zombs() {
 			frame = new JFrame();
 			gp1 = new GamePanel();
+			
 		}
 
 		void setup() {

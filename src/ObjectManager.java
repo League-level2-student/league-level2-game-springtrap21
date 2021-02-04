@@ -7,12 +7,12 @@ import java.util.Random;
 import javax.management.timer.Timer;
 
 public class ObjectManager{
+	static int score = 0;
 	Character c;
 	ArrayList<Bullet> bl;
 	ArrayList<Zombies> zm;
 	ArrayList<Splat> sp;
 	public static Random rnd = new Random();
-	int score = 0;
 	int hits = 0;
 	int misses = 0;
 	int points = 0;

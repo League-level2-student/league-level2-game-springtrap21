@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	final int GAME = 1;
 	final int END = 2;
 	final int SHOP = 3;
-	int currentState = MENU;
+	int currentState = MENU;			
 	Font titleFont;
 	Font subFont;
 	Timer frameDraw;
@@ -78,9 +78,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			}
 			if (om.shopTime) {
 				currentState = SHOP;
-				om.shopTime = false;
-				this.add(shop);				
+				this.add(shop);
 				this.revalidate();
+				om.shopTime = false;
 			}
 		}
 	}
@@ -89,7 +89,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	}
 	
 	void updateShopState() {
-		
+		shop.update();
+		if (shop.doneShopping) {
+			this.remove(shop);
+			currentState = GAME;
+			shop.doneShopping = false;
+		}
 	}
 
 	void drawMenuState(Graphics g) {
@@ -213,8 +218,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		    	pause = !pause;
 		    }
 		    else if (currentState == SHOP) {
-		    	this.remove(shop);
-		    	currentState = GAME;
+		    	
 		    }
 		    else {
 		        currentState++;
