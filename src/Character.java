@@ -11,7 +11,16 @@ public class Character extends GameObject{
 	public boolean movingUp, movingDown, movingRight, movingLeft;
 	public BufferedImage graphic;
 	long lastSet;
+	final int PISTOL = 0;
+	static final int RIFLE = 1;
+	static final int SMG = 2;
+	static final int SNIPER = 3;
+	static final int RAYGUN = 4;
+	
+	int currentWeapon;
+	int damage;
 	int facing; 
+	int fireDelay;
 	CrossHair ch;
 	Character(float x, float y, int width, int height, int hp, CrossHair ch) {
 		super(x, y, width, height);
@@ -21,6 +30,7 @@ public class Character extends GameObject{
 		this.hp = hp;
 		this.ch = ch;
 		speed = 5;
+		changeWeapon(PISTOL);
 	}
 	
 	void draw(Graphics g) {
@@ -102,6 +112,42 @@ public class Character extends GameObject{
 			y += moveY * 30;
 		}
 
+	}
+	void changeWeapon(int weapon) {
+		currentWeapon = weapon;
+		if (currentWeapon == PISTOL) {
+			damage = 25;
+			fireDelay = 250;
+			loadImage("character.png");
+		}
+		if (currentWeapon == RIFLE) {
+			damage = 34;
+			fireDelay = 325;
+			loadImage("character.png");
+		}
+		else if (currentWeapon == SMG) {
+			damage = 20;
+			fireDelay = 100;
+			loadImage("character.png");
+		}
+		else if (currentWeapon == SNIPER) {
+			damage = 100;
+			fireDelay = 500;
+			loadImage("character.png");
+		}
+		else if (currentWeapon == RAYGUN) {
+			damage = 50;
+			fireDelay = 200;
+			loadImage("character.png");
+		}
+		else {
+			damage = 25;
+			fireDelay = 250;		
+		}
+	}
+	void buyWeapon(int weapon, int cost) {
+		changeWeapon(weapon);
+		ObjectManager.points = ObjectManager.points - cost;
 	}
 }
 

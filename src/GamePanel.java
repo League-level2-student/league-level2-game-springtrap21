@@ -34,7 +34,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	CrossHair ch;
 	Shop shop;
 	boolean firing;
-	long fireDelay;
 	long lastFire;
 	boolean pause = false;
 
@@ -52,9 +51,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		ch = new CrossHair(0, 0, 75, 75);
 		c = new Character(Zombs.WIDTH/2, Zombs.HEIGHT/2, 40, 40, 100, ch);
 		om = new ObjectManager(c, ch);
-		shop = new Shop();
+		shop = new Shop(this);
 		firing = false;
-		fireDelay = 300;
 		lastFire = System.currentTimeMillis();
 		
 	}
@@ -69,7 +67,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 				currentState = END;
 			}
 			if (firing) {
-				if (System.currentTimeMillis() - lastFire > fireDelay) {
+				if (System.currentTimeMillis() - lastFire > c.fireDelay) {
 					lastFire = System.currentTimeMillis();
 					if (currentState == GAME) {
 						om.addBullet(ch.x, ch.y);

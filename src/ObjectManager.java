@@ -8,6 +8,7 @@ import javax.management.timer.Timer;
 
 public class ObjectManager{
 	static int score = 0;
+	static int points = 0;
 	Character c;
 	ArrayList<Bullet> bl;
 	ArrayList<Zombies> zm;
@@ -15,7 +16,6 @@ public class ObjectManager{
 	public static Random rnd = new Random();
 	int hits = 0;
 	int misses = 0;
-	int points = 0;
 	int zomSpawned = 0;
 	int zomKilled = 0;
 	boolean zomSpawn = true;
@@ -38,7 +38,7 @@ public class ObjectManager{
 		return score;
 	}
 	void addBullet(float destX, float destY) {
-		bl.add(new Bullet(c.x, c.y, 10, 10, destX, destY, 34));
+		bl.add(new Bullet(c.x, c.y, 10, 10, destX, destY, c.damage));
 		Zombs.playSound("gun shot.wav", -12);
 	}
 
@@ -151,14 +151,14 @@ public class ObjectManager{
 		wavePause = System.currentTimeMillis();
 		zomKilled = 0;
 		zomSpawned = 0;
-		points += hits * 10 - misses * 5;
+		points += hits * 100 - misses * 5;
 		hits = 0;
 		misses = 0;
 		wave++;
 		zomPerWave += 2;
-		if (wave == 2 || wave == 5 || wave == 10 || wave == 15 || wave == 20 || wave == 25 || wave == 30 || wave == 40|| wave == 50) {
+		//if (wave == 2 || wave == 5 || wave == 10 || wave == 15 || wave == 20 || wave == 25 || wave == 30 || wave == 40|| wave == 50) {
 			shopTime = true;
-		}
+		//}
 	}
 	
 	void checkCollision() {
@@ -167,7 +167,7 @@ public class ObjectManager{
 			for (int j = 0; j < bl.size(); j++) {
 				Bullet b = bl.get(j);
 				if (z.collisionBox.intersects(b.collisionBox)) {
-					z.gotHit(b.damage, b.moveX, b.moveY);
+					z.gotHit(c.damage, b.moveX, b.moveY);
 					createBlood(b.x, b.y);
 					b.isActive = false;
 					Zombs.playSound("bullet hit.wav", -6);

@@ -3,19 +3,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Shop extends JPanel{
+	GamePanel gp;
 	int shopWidth;
 	int shopHeight;
 	boolean doneShopping = false;
-	JButton b = new JButton("Rifle for $3000");
-	JButton b1 = new JButton("SMG for $2500");
-	JButton b2 = new JButton("Sniper for $5000");
-	JButton b3 = new JButton("Ray Gun for $10000");
+	final int RIFLE_COST = 3000;
+	final int SMG_COST = 2500;
+	final int SNIPER_COST = 5000;
+	final int RAY_COST = 10000;
+	JButton b = new JButton("Rifle for $" + RIFLE_COST);
+	JButton b1 = new JButton("SMG for $" + SMG_COST);
+	JButton b2 = new JButton("Sniper for $" + SNIPER_COST);
+	JButton b3 = new JButton("Ray Gun for $" + RAY_COST);
 	JButton b4 = new JButton("Press to Exit when Done");
 	
-	Shop() {
+	Shop(GamePanel gp) {
+		this.gp = gp;
 		this.add(b);
 		this.add(b1);
 		this.add(b2);
@@ -54,25 +61,25 @@ public class Shop extends JPanel{
 		
 	}
 	void update() {
-		if (ObjectManager.score >= 3000) {
+		if (ObjectManager.points >= RIFLE_COST) {
 			b.setEnabled(true);
 		}
 		else {
 			b.setEnabled(false);
 		}
-		if (ObjectManager.score >= 2500) {
+		if (ObjectManager.points >= SMG_COST) {
 			b1.setEnabled(true);
 		}
 		else {
 			b1.setEnabled(false);
 		}
-		if (ObjectManager.score >= 5000) {
+		if (ObjectManager.points >= SNIPER_COST) {
 			b2.setEnabled(true);
 		}
 		else {
 			b2.setEnabled(false);
 		}
-		if (ObjectManager.score >= 10000) {
+		if (ObjectManager.points >= RAY_COST) {
 			b3.setEnabled(true);
 		}
 		else {
@@ -82,16 +89,20 @@ public class Shop extends JPanel{
 	void draw(Graphics g) {		
 	}
 	void bButtonPressed() {
-		
+		JOptionPane.showMessageDialog(null, "You equipped the rifle");
+		gp.c.buyWeapon(Character.RIFLE, RIFLE_COST);
 	}
 	void b1ButtonPressed() {
-		
+		JOptionPane.showMessageDialog(null, "You equipped the smg");
+		gp.c.buyWeapon(Character.SMG, SMG_COST);
 	}
 	void b2ButtonPressed() {
-	
+		JOptionPane.showMessageDialog(null, "You equipped the sniper");
+		gp.c.buyWeapon(Character.SNIPER, SNIPER_COST);
 	}
 	void b3ButtonPressed() {
-	
+		JOptionPane.showMessageDialog(null, "You equipped the ray gun");
+		gp.c.buyWeapon(Character.RAYGUN, RAY_COST);
 	}
 	void b4ButtonPressed() {
 		doneShopping = true;
