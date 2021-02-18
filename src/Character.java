@@ -16,6 +16,7 @@ public class Character extends GameObject{
 	static final int SMG = 2;
 	static final int SNIPER = 3;
 	static final int RAYGUN = 4;
+	boolean isAuto = true;
 	
 	int currentWeapon;
 	int damage;
@@ -117,27 +118,32 @@ public class Character extends GameObject{
 		currentWeapon = weapon;
 		if (currentWeapon == PISTOL) {
 			damage = 25;
-			fireDelay = 250;
+			fireDelay = 350;
+			isAuto = false;
 			loadImage("character.png");
 		}
 		if (currentWeapon == RIFLE) {
 			damage = 34;
-			fireDelay = 325;
+			fireDelay = 300;
+			isAuto = true;
 			loadImage("character.png");
 		}
 		else if (currentWeapon == SMG) {
-			damage = 20;
+			damage = 19;
 			fireDelay = 100;
+			isAuto = true;
 			loadImage("character.png");
 		}
 		else if (currentWeapon == SNIPER) {
 			damage = 100;
 			fireDelay = 500;
+			isAuto = false;
 			loadImage("character.png");
 		}
 		else if (currentWeapon == RAYGUN) {
-			damage = 50;
-			fireDelay = 200;
+			damage = 75;
+			fireDelay = 210;
+			isAuto = false;
 			loadImage("character.png");
 		}
 		else {

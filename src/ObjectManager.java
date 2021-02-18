@@ -151,7 +151,7 @@ public class ObjectManager{
 		wavePause = System.currentTimeMillis();
 		zomKilled = 0;
 		zomSpawned = 0;
-		points += hits * 100 - misses * 5;
+		points += hits * 1000 - misses * 5;
 		hits = 0;
 		misses = 0;
 		wave++;

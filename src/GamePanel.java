@@ -72,6 +72,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 					if (currentState == GAME) {
 						om.addBullet(ch.x, ch.y);
 					}
+					if (c.isAuto == false) {
+						firing = false;
+					}
 				}
 			}
 			if (om.shopTime) {
@@ -295,7 +298,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if (c.isAuto == false) {
+			firing = true;
+			System.out.println("clicked");
+		}
 	}
 
 	@Override
@@ -313,7 +319,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		firing = true;
+		if (c.isAuto == true) {
+			firing =true;
+		}
 	}
 
 	@Override
