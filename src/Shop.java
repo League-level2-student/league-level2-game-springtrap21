@@ -11,11 +11,11 @@ public class Shop extends JPanel{
 	int shopWidth;
 	int shopHeight;
 	boolean doneShopping = false;
-	final int RIFLE_COST = 3000;
+	final int RIFLE_COST = 5000;
 	final int SMG_COST = 2500;
-	final int SNIPER_COST = 5000;
-	final int RAY_COST = 10000;
-	JButton b = new JButton("Rifle for $" + RIFLE_COST);
+	final int SNIPER_COST = 10000;
+	final int RAY_COST = 15000;
+	JButton b = new JButton("AR for $" + RIFLE_COST);
 	JButton b1 = new JButton("SMG for $" + SMG_COST);
 	JButton b2 = new JButton("Sniper for $" + SNIPER_COST);
 	JButton b3 = new JButton("Ray Gun for $" + RAY_COST);
@@ -89,7 +89,7 @@ public class Shop extends JPanel{
 	void draw(Graphics g) {		
 	}
 	void bButtonPressed() {
-		JOptionPane.showMessageDialog(null, "You equipped the rifle");
+		JOptionPane.showMessageDialog(null, "You equipped the Assult rifle");
 		gp.c.buyWeapon(Character.RIFLE, RIFLE_COST);
 	}
 	void b1ButtonPressed() {

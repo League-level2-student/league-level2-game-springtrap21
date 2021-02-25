@@ -104,7 +104,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.setFont(titleFont);
 		g.setColor(Color.WHITE);
 		int textWidth = g.getFontMetrics().stringWidth("Zombs: Survive");
-		g.drawString("Santa Zombs", Zombs.WIDTH/2-(textWidth/2), 100);
+		g.drawString("Zombs: Survive", Zombs.WIDTH/2-(textWidth/2), 100);
 		g.setFont(subFont);
 		g.setColor(Color.WHITE);
 		textWidth = g.getFontMetrics().stringWidth("Press ENTER to start");
@@ -162,7 +162,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.setColor(Color.BLACK);
 		g.setFont(subFont);
 		textWidth = g.getFontMetrics().stringWidth("You survived until wave " + om.wave + " !");
-		g.drawString("You survived until wave" + om.wave + " !", Zombs.WIDTH/2-(textWidth/2), 400);
+		g.drawString("You survived until wave " + om.wave + " !", Zombs.WIDTH/2-(textWidth/2), 400);
 		textWidth = g.getFontMetrics().stringWidth("You purged " + om.score + " Zombies!");
 		g.drawString("You purged " + om.score + " Zombies!", Zombs.WIDTH/2-(textWidth/2), 330);
 		g.setColor(Color.BLACK);
@@ -246,7 +246,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 			
 		}
 		if (arg0.getKeyCode()==KeyEvent.VK_SPACE && currentState == MENU) {
-			JOptionPane.showMessageDialog(null, "You move your character around with the keys: W A S D. Use Left Click to shoot at the Zombies. Need some time? press enter when you are in the game to pause. And one last thing, try to survive!");
+			JOptionPane.showMessageDialog(null, "You move your character around with the keys: W A S D. Use Left Click to shoot at the Zombies. Need some time? press enter when you are in the game to pause. When the shop pops up, you can click on the butons to by different weapons. And one last thing, try to survive!");
 		}
 	}
 	
@@ -298,10 +298,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if (c.isAuto == false) {
-			firing = true;
-			System.out.println("clicked");
-		}
 	}
 
 	@Override
@@ -319,9 +315,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if (c.isAuto == true) {
-			firing =true;
-		}
+		firing =true;
 	}
 
 	@Override

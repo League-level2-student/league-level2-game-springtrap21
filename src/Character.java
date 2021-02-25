@@ -124,19 +124,19 @@ public class Character extends GameObject{
 		}
 		if (currentWeapon == RIFLE) {
 			damage = 34;
-			fireDelay = 300;
+			fireDelay = 210;
 			isAuto = true;
 			loadImage("character.png");
 		}
 		else if (currentWeapon == SMG) {
-			damage = 19;
-			fireDelay = 100;
+			damage = 15;
+			fireDelay = 120;
 			isAuto = true;
 			loadImage("character.png");
 		}
 		else if (currentWeapon == SNIPER) {
 			damage = 100;
-			fireDelay = 500;
+			fireDelay = 400;
 			isAuto = false;
 			loadImage("character.png");
 		}

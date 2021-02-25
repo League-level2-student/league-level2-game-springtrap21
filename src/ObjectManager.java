@@ -24,6 +24,7 @@ public class ObjectManager{
 	int wave = 1;
 	int zomPerWave = 5;
 	long wavePause;
+	int spawnDelay = 1000;
 	long zombLastSpawn;
 	CrossHair ch;
 
@@ -131,7 +132,7 @@ public class ObjectManager{
 	}
 	
 	void checkSpawn() {
-		if (zomSpawn && System.currentTimeMillis() - zombLastSpawn > 1000) {
+		if (zomSpawn && System.currentTimeMillis() - zombLastSpawn > spawnDelay) {
 			addZombie();
 			zomSpawned++;
 			zombLastSpawn = System.currentTimeMillis();
@@ -149,13 +150,14 @@ public class ObjectManager{
 	
 	void newWaveStart() {
 		wavePause = System.currentTimeMillis();
-		zomKilled = 0;
-		zomSpawned = 0;
-		points += hits * 1000 - misses * 5;
+		points += (zomKilled * 100) * ((float)hits / ((float)hits + (float)misses));
 		hits = 0;
 		misses = 0;
-		wave++;
-		zomPerWave += 2;
+		zomKilled = 0;
+		zomSpawned = 0;
+		wave+=1;
+		zomPerWave += 3;
+		spawnDelay = spawnDelay - 10;
 		//if (wave == 2 || wave == 5 || wave == 10 || wave == 15 || wave == 20 || wave == 25 || wave == 30 || wave == 40|| wave == 50) {
 			shopTime = true;
 		//}
