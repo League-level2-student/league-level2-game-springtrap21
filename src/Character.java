@@ -102,6 +102,15 @@ public class Character extends GameObject{
 	        needImage = false;
 	    }
 	}
+	
+	void switchImage(String imageFile) {
+		 try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+	        } catch (Exception e) {
+	            
+	        }
+	}
+	
 	void gotHit(int damage, float moveX, float moveY) {
 		hp = hp-damage;
 		if (hp <= 0) {
@@ -120,31 +129,31 @@ public class Character extends GameObject{
 			damage = 25;
 			fireDelay = 350;
 			isAuto = false;
-			loadImage("character.png");
+			switchImage("pistol.png");
 		}
 		if (currentWeapon == RIFLE) {
 			damage = 34;
 			fireDelay = 210;
 			isAuto = true;
-			loadImage("character.png");
+			switchImage("AR.png");
 		}
 		else if (currentWeapon == SMG) {
 			damage = 15;
 			fireDelay = 120;
 			isAuto = true;
-			loadImage("character.png");
+			switchImage("character.png");
 		}
 		else if (currentWeapon == SNIPER) {
 			damage = 100;
 			fireDelay = 400;
 			isAuto = false;
-			loadImage("character.png");
+			switchImage("sniper.png");
 		}
 		else if (currentWeapon == RAYGUN) {
 			damage = 75;
 			fireDelay = 210;
 			isAuto = false;
-			loadImage("character.png");
+			switchImage("character.png");
 		}
 		else {
 			damage = 25;

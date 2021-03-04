@@ -18,7 +18,7 @@ public class Shop extends JPanel{
 	JButton b = new JButton("AR for $" + RIFLE_COST);
 	JButton b1 = new JButton("SMG for $" + SMG_COST);
 	JButton b2 = new JButton("Sniper for $" + SNIPER_COST);
-	JButton b3 = new JButton("Ray Gun for $" + RAY_COST);
+	//JButton b3 = new JButton("Ray Gun for $" + RAY_COST);
 	JButton b4 = new JButton("Press to Exit when Done");
 	
 	Shop(GamePanel gp) {
@@ -26,12 +26,12 @@ public class Shop extends JPanel{
 		this.add(b);
 		this.add(b1);
 		this.add(b2);
-		this.add(b3);
+		//this.add(b3);
 		this.add(b4);
 		b.setFocusable(false);
 		b1.setFocusable(false);
 		b2.setFocusable(false);
-		b3.setFocusable(false);
+		//b3.setFocusable(false);
 		b4.setFocusable(false);
 		b.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) { 
@@ -48,11 +48,11 @@ public class Shop extends JPanel{
 				    b2ButtonPressed();
 				  }
 		} );
-		b3.addActionListener(new ActionListener() { 
-			  public void actionPerformed(ActionEvent e) { 
-				    b3ButtonPressed();
-				  }
-		} );
+		//addActionListener(new ActionListener() { 
+			//  public void actionPerformed(ActionEvent e) { 
+				//    b3ButtonPressed();
+				  //}
+		//} );
 		b4.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) { 
 				    b4ButtonPressed();
@@ -79,12 +79,12 @@ public class Shop extends JPanel{
 		else {
 			b2.setEnabled(false);
 		}
-		if (ObjectManager.points >= RAY_COST) {
-			b3.setEnabled(true);
-		}
-		else {
-			b3.setEnabled(false);		
-		}
+		//if (ObjectManager.points >= RAY_COST) {
+			//b3.setEnabled(true);
+		//}
+		//else {
+			//b3.setEnabled(false);		
+		//}
 	}
 	void draw(Graphics g) {		
 	}

@@ -103,7 +103,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener, Mo
 		g.fillRect(0, 0, Zombs.WIDTH, Zombs.HEIGHT);
 		g.setFont(titleFont);
 		g.setColor(Color.WHITE);
-		int textWidth = g.getFontMetrics().stringWidth("Zombs: Survive");
+		int textWidth = g.getFontMetrics().stringWidth("Zombs: Survive!");
 		g.drawString("Zombs: Survive", Zombs.WIDTH/2-(textWidth/2), 100);
 		g.setFont(subFont);
 		g.setColor(Color.WHITE);

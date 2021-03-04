@@ -47,7 +47,7 @@ import javax.swing.JFrame;
 			      try {
 			        Clip clip = AudioSystem.getClip();
 			        AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-			          this.getClass().getResourceAsStream(url));
+			          this.getClass().getResource("/" + url));
 			        clip.open(inputStream);
 			        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			        volume.setValue(gainAmount);
